@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+ 	<meta charset='UTF-8'>
+    <link rel = 'stylesheet' href = 'saisie.css'>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT35vjYyv4H4qkz0n93vzOS9Pp1hKthQY">
+    </script>
+    <script src="./js/test.js"></script>
+  </head>
+  <body>
+    
+
+    <div id = 'titre'>
+    	<p>Complétez tous les champs avec les éléments de votre stage</p>
+    </div>
+
+
+    <form method = 'get'>
+    	<fieldset>
+    		<legend>Maître de stage</legend>
+    		Nom : <input type='text' name='maitre_nom'/> <br>
+    		Prénom : <input type='text' name='maitre_prenom'/> <br>
+    		Mail : <input type='text' name='maitre_mail'/> <br>
+    	</fieldset>
+
+    	<fieldset>
+    		<legend>Etudiant</legend>
+    		Nom : <input type='text' name='etudiant_nom'/> <br>
+    		Prénom : <input type='text' name='etudiant_prenom'/> <br>
+    		Mail : <input type='text' name='etudiant_mail'/>  <br>
+    	</fieldset>
+
+    	<fieldset>
+    		<legend>Stage</legend>
+    		Titre en anglais : <input type='text' name='titre_anglais'/>  <br>
+    		Titre en français : <input type='text' name='titre_français'/>  <br>
+    		Résumé en anglais : <input type='text' name='resume_anglais'/>   <br>
+    		Résumé en français : <input type='text' name='resume_français'/>  <br>
+    		Année : <input type='text' name='annee'/>
+    	</fieldset>
+
+        <input type="submit" id="submitBtn" value="valider">
+    </form>
+
+	<div id="map" style='height: 100px'></div>
+
+    <div id='lieuxProches'></div>
+
+
+  </body>
+</html>

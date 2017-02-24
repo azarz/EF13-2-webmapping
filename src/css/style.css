@@ -1,0 +1,49 @@
+html, body { 
+	height: 100%; 
+	margin: 0; 
+	padding: 0; 
+}
+
+#map { 
+	height: 100%; 
+}
+
+#panel{
+	position: absolute;
+	z-index: 10;
+	right: 1px;
+	top: 0;
+	background-color: rgba(200,200,200,0.8);
+	height: 250px;
+	width: 250px;
+	border: 1px solid black;
+	border-radius: 8px;
+	
+	font-family: Calibri;
+}
+
+#panel form{
+	padding: 10px;
+	text-align: center
+}
+
+#retLegend{
+	padding-right: 9px;
+	padding-left: 7px;
+}
+
+#panel img{
+  transform: translateY(30%);
+  -webkit-transform: translateY(30%);
+}
+
+#reticule{
+	position: absolute;
+	cursor: grab;
+	height: 19px;
+	z-index: 10;
+	left: 50%;
+	top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
