@@ -3,26 +3,40 @@ var marker;
 var validationBtn;
 
 
-window.onload = function(){
+window.onload = init;
 
-	initMap();
-	var map = new google.maps.Map(document.getElementById("map"),optionsCarte);
-	validationBtn = document.getElementById("submitBtn");
-	validationBtn.addEventListener('click', validate);
 
-	marker = new google.maps.Marker({
-		draggable: false,
-		position: redLatLng,
-		map: map,
-		position: new google.maps.LatLng(42.698971,9.451943)
-	});
+/************ Initialisation de la page ****************/
+
+function init(){
+    /**
+    Initialisation de la fenêtre
+    */
+    initMap();
+    validationBtn = document.getElementById("submitBtn");
+    validationBtn.addEventListener('click', validate);
+
+    marker = new google.maps.Marker({
+        draggable: true,
+        map: map,
+        position: new google.maps.LatLng(42.698971,9.451943)
+    });
 }
-
-
 
 function initMap() {
-	optionsCarte = {zoom:2, center: new google.maps.LatLng(42.698971,9.451943) }
+    /**
+    Initalisation de la map, centrée sur l'ENSG
+    */
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: new google.maps.LatLng(42.698971, 9.451943),
+    });
 }
+
+
+
+
+/************* Écouteurs d'évènements ***************/
 
 function validate(event){
 	event.preventDefault();
