@@ -11,6 +11,9 @@ var new_location;
 
 
 
+
+var select_location;
+
 // Fonction au lancement de la fenêtre
 window.onload = init;
 
@@ -61,13 +64,14 @@ function validateForm(event){
 	event.preventDefault();
 
 	var lat = marker.getPosition().lat();
-	var lon = marker.getPosition().lon();
+	var lon = marker.getPosition().lng();
 
 	var xhr = new XMLHttpRequest();
 
     xhr.addEventListener('readystatechange', function(){
         if(xhr.readyState == 4 && xhr.status == 200){
-            var response = xhr.responseText();
+            var response = xhr.responseText;
+            console.log(response);
 
             if (response == ''){
                 new_location = true;
@@ -82,9 +86,9 @@ function validateForm(event){
                 var texte_confirm = document.createElement("p");
                 texte_confirm.innerHTML = "Votre stage a eu lieu dans :"
 
-            	var select = document.createElement("select");
-            	select.setAttribute("name","listeLieux");
-            	select.setAttribute("id","listeLieux");
+            	select_location = document.createElement("select");
+            	select_location.setAttribute("name","listeLieux");
+            	select_location.setAttribute("id","listeLieux");
 
            		var confirmBtn = document.createElement("button");
             	confirmBtn.setAttribute("name","confirmBtn");
@@ -100,14 +104,15 @@ function validateForm(event){
 
             	for(i=0; i<responseJSON.length;i++){
             		var option = document.createElement("option");
-            		option.setAttribute("value",responseJSON[i].name);
+            		option.innerHTML = responseJSON[i].name;
+                    option.setAttribute("value",responseJSON[i].id);
             		option.innerHTML=responseJSON[i].name;
 
-            		select.appendChild(option);
+            		select_location.appendChild(option);
             	}
 
                 lieuxProches.appendChild(texte_confirm);
-            	lieuxProches.appendChild(select);
+            	lieuxProches.appendChild(select_location);
             	lieuxProches.appendChild(confirmBtn);
                 lieuxProches.appendChild(neitherBtn);
 
@@ -134,10 +139,26 @@ function newLocation(){
 }
 
 
+
+
 function updateDB(){
+    /**
+    Envoi des données au  serveur afin de mettre à jour la base de données
+    */
+
+    var data = {location: 0,
+                internship:{
+                    title_fr: document.getElementById('titre_français').value
+                }
+    }
+
+    if(!new_location){
+        data.location = {id: select_location.value}
+    }
+
 
     var xhr = new XMLHttpRequest();
-    
+
     xhr.addEventListener('readystatechange', function(){
         if(xhr.readyState == 4 && xhr.status == 200){
 	       alert('Stage ajouté');

@@ -24,10 +24,10 @@
 	Le 0.25 dans le ST_DWithin de la clause WHERE correspond à une distance angulaire de 0.25° dans le système EPSG:4326, soit WGS84 plate carrée
 	Ce qui correspond à peu près à 28 km car 1° correspond à 111 km à l'équateur et 28*4 = 112
 	*/
-	$requestBuffer = "SELECT id, lat, lng,
+	$requestBuffer = "SELECT id, name, lat, lng
 				FROM $table_name 
 				WHERE ST_DWithin( ST_SetSRID(ST_MakePoint(lng, lat), 4326), ST_SetSRID(ST_MakePoint($lon_m, $lat_m), 4326), 0.25) 
-				ORDER BY ST_Distance( ST_SetSRID(ST_MakePoint(lng, lat), 4326), ST_SetSRID(ST_MakePoint($lon_r, $lat_r), 4326) ) ASC ";
+				ORDER BY ST_Distance( ST_SetSRID(ST_MakePoint(lng, lat), 4326), ST_SetSRID(ST_MakePoint($lon_m, $lat_m), 4326) ) ASC ";
 
 	$resultBuffer = pg_query($link, $requestBuffer);
 
@@ -36,16 +36,16 @@
 	}
 
 
-	if(!pg_fetch_row($resultBuffer)){
+	if(!pg_fetch_row($resultBuffer, 0)){
 		// S'il n'y a aucun résultat, on renvoie une chaîne vide
-		echo ''
+		echo '';
 
 	} else {
 		// Notre sortie
 		$tabOut = array() ; 
 
 		// On remplit avec les résultats, en convertissant le string du resultat en un type utilisable
-		while($ligne = pg_fetch_row($resultNBuffer)) {
+		while($ligne = pg_fetch_row($resultBuffer)) {
 			$tabOut[] = array('id'=> intval($ligne[0]),
 							  'name'=> $ligne[1], 
 							  'lat'=> floatval($ligne[2]), 
