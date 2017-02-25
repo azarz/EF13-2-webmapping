@@ -24,6 +24,10 @@ function init(){
     initMap();
     validationBtn = document.getElementById("submitBtn");
     validationBtn.addEventListener('click', validateForm);
+    var lieuxProches = document.getElementById("lieuxProches");
+
+    // On cache la dv pour les lieux proches
+    lieuxProches.style.visibility = "hidden";
 
     marker = new google.maps.Marker({
         draggable: true,
@@ -48,6 +52,12 @@ function initMap() {
 /************* Écouteurs d'évènements ***************/
 
 function validateForm(event){
+    /**
+    FOnction qui se déclenche à la validation du formulaire, récupère 
+    la position du marqueur et interroge le serveur pour obtenir d'éventuels
+    lieux de stages proches. Le cas échéant, on affiche ces lieux en demandant
+    la confirmation de l'utilisateur
+    */
 	event.preventDefault();
 
 	var lat = marker.getPosition().lat();
@@ -61,13 +71,17 @@ function validateForm(event){
 
             if (response == ''){
                 new_location = true;
-            	confirmLocation();
+            	updateDB();
             
             } else{
                 new_location = false;
             	responseJSON = JSON.parse(response);
 
-            	var lieuxProches= document.getElementById("lieuxProches");
+            	var lieuxProches = document.getElementById("lieuxProches")
+
+                var texte_confirm = document.createElement("p");
+                texte_confirm.innerHTML = "Votre stage a eu lieu dans :"
+
             	var select = document.createElement("select");
             	select.setAttribute("name","listeLieux");
             	select.setAttribute("id","listeLieux");
@@ -75,9 +89,14 @@ function validateForm(event){
            		var confirmBtn = document.createElement("button");
             	confirmBtn.setAttribute("name","confirmBtn");
             	confirmBtn.setAttribute("id","confirmBtn");
-            	confirmBtn.addEventListener("click", confirmLocation);
+                confirmBtn.setAttribute("value","Confirmer lieu");
+            	confirmBtn.addEventListener("click", updateDB);
 
-            	
+                var neitherBtn = document.createElement("button");
+                neitherBtn.setAttribute("name","neitherBtn");
+                neitherBtn.setAttribute("id","neitherBtn");
+                neitherBtn.setAttribute("value","Aucun de ces lieux");
+                neitherBtn.addEventListener("click", newLocation);
 
             	for(i=0; i<responseJSON.length;i++){
             		var option = document.createElement("option");
@@ -87,8 +106,13 @@ function validateForm(event){
             		select.appendChild(option);
             	}
 
+                lieuxProches.appendChild(texte_confirm);
             	lieuxProches.appendChild(select);
             	lieuxProches.appendChild(confirmBtn);
+                lieuxProches.appendChild(neitherBtn);
+
+                // On affiche le choix
+                lieuxProches.style.visibility = "visible";
             }
         }
     });
@@ -100,8 +124,27 @@ function validateForm(event){
 
 
 
-function confirmLocation(){
-	alert('Stage ajouté');
+
+function newLocation(){
+    /**
+    Fonction lorqu'aucun des lieux proposées n'est le lieu de stage
+    */
+    new_location = true;
+    updateDB();
+}
+
+
+function updateDB(){
+
+    var xhr = new XMLHttpRequest();
+    
+    xhr.addEventListener('readystatechange', function(){
+        if(xhr.readyState == 4 && xhr.status == 200){
+	       alert('Stage ajouté');
+       }
+    });
+
+
 }
 
 /// A FAIRE PAR LA SUITE
