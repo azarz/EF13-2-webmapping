@@ -1,8 +1,17 @@
-var optionsCarte;
+/******** Variables globales *******/
+
+// Le marqueur à déplacer
 var marker;
+// Le bouton de validation
 var validationBtn;
+var new_location;
+
+//TODO: importer les champs DOM
 
 
+
+
+// Fonction au lancement de la fenêtre
 window.onload = init;
 
 
@@ -14,7 +23,7 @@ function init(){
     */
     initMap();
     validationBtn = document.getElementById("submitBtn");
-    validationBtn.addEventListener('click', validate);
+    validationBtn.addEventListener('click', validateForm);
 
     marker = new google.maps.Marker({
         draggable: true,
@@ -38,7 +47,7 @@ function initMap() {
 
 /************* Écouteurs d'évènements ***************/
 
-function validate(event){
+function validateForm(event){
 	event.preventDefault();
 
 	var lat = marker.getPosition().lat();
@@ -46,15 +55,16 @@ function validate(event){
 
 	var xhr = new XMLHttpRequest();
 
-
-    // On prévient losque la mise à jour est terminée
     xhr.addEventListener('readystatechange', function(){
         if(xhr.readyState == 4 && xhr.status == 200){
             var response = xhr.responseText();
 
             if (response == ''){
-            	confirm()
+                new_location = true;
+            	confirmLocation();
+            
             } else{
+                new_location = false;
             	responseJSON = JSON.parse(response);
 
             	var lieuxProches= document.getElementById("lieuxProches");
@@ -62,10 +72,10 @@ function validate(event){
             	select.setAttribute("name","listeLieux");
             	select.setAttribute("id","listeLieux");
 
-           		var confirmer = document.createElement("button");
-            	confirmer.setAttribute("name","confirmer");
-            	confirmer.setAttribute("id","confirmer");
-            	confirmer.addEventListener("click",confirm);
+           		var confirmBtn = document.createElement("button");
+            	confirmBtn.setAttribute("name","confirmBtn");
+            	confirmBtn.setAttribute("id","confirmBtn");
+            	confirmBtn.addEventListener("click", confirmLocation);
 
             	
 
@@ -78,18 +88,19 @@ function validate(event){
             	}
 
             	lieuxProches.appendChild(select);
-            	lieuxProches.appendChild(confirmer);
+            	lieuxProches.appendChild(confirmBtn);
             }
         }
     });
 
-    // On envoie la requpete au serveur
-    xhr.open('GET', 'server/update_db.php?lat=' + lat + '&lon=' + lon, true);
+    // On envoie la requête au serveur
+    xhr.open('GET', 'server/geo_query.php?lat=' + lat + '&lon=' + lon, true);
     xhr.send();
 }
 
-function confirm()
-{
+
+
+function confirmLocation(){
 	alert('Stage ajouté');
 }
 
