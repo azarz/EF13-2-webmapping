@@ -72,7 +72,6 @@ function validateForm(event){
     xhr.addEventListener('readystatechange', function(){
         if(xhr.readyState == 4 && xhr.status == 200){
             var response = xhr.responseText;
-            console.log(response);
 
             if (response == ''){
                 new_location = true;
@@ -155,13 +154,22 @@ function updateDB(){
 
     if(!new_location){
         data.location = {id: select_location.value}
+    } else{
+        data.location = {
+            name: document.getElementById('lieu').value,
+            lat: marker.getPosition().lat(),
+            lng: marker.getPosition().lng(),
+        }
     }
 
+
+    var dataJSON = JSON.stringify(data);
 
     var xhr = new XMLHttpRequest();
 
     xhr.addEventListener('readystatechange', function(){
         if(xhr.readyState == 4 && xhr.status == 200){
+            console.log(xhr.responseText);
 
             // On cache l'overlay, et on supprime ses enfants
             overlay.style.visibility = "hidden";
@@ -174,9 +182,9 @@ function updateDB(){
        }
     });
 
+    // On envoie la requpete au serveur
+    xhr.open('POST', 'server/insert_db.php', true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send("data=" + dataJSON);
 
 }
-
-/// A FAIRE PAR LA SUITE
-/* CREER LES FICHIERS PHP (select, insert, update de stage
-*/

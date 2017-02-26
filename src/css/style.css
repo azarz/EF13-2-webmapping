@@ -1,5 +1,6 @@
 body{
 	font-family: Calibri;
+	background-color: lightgrey;
 }
 
 body{
@@ -93,7 +94,7 @@ fieldset p{
 	height: 75px;
 	width: 25%;
 	font-size: 1.9em;
-	background-color: lightblue;
+	background-color: green;
 }
 
 #overlay{

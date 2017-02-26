@@ -36,7 +36,7 @@
 	}
 
 
-	if(!pg_fetch_row($resultBuffer, 0)){
+	if(pg_num_rows($resultBuffer) == 0){
 		// S'il n'y a aucun résultat, on renvoie une chaîne vide
 		echo '';
 
