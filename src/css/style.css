@@ -1,6 +1,7 @@
 html, body{
 	width: 100%;
 	height: 100%;
+	font-family: Calibri;
 }
 
 #textes{
@@ -40,7 +41,31 @@ fieldset p{
 	display: block;
 }
 
+#titre_anglais{
+	width: 98%;
+}
+
+#titre_français{
+	width: 98%;
+}
+
+#resume_anglais{
+	width: 98%;
+	height: 100px;
+}
+#resume_français{
+	width: 98%;
+	height: 100px;
+}
+
+#lieu{
+	width: 55%;
+}
+
 #map {
+	margin-left: auto;
+  margin-right: auto;
 	margin-top: 10px;
-	height: 100px; 
+	width: 67%;
+	height: 500px; 
 }
