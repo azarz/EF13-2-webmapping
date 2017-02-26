@@ -1,7 +1,14 @@
-html, body{
-	width: 100%;
-	height: 100%;
+body{
 	font-family: Calibri;
+}
+
+body{
+	margin: 0;
+}
+
+#titre{
+	text-align: center;
+	font-size: 1.2em;
 }
 
 #textes{
@@ -62,10 +69,62 @@ fieldset p{
 	width: 55%;
 }
 
+#aide{
+	text-align: center;
+  margin-bottom: 0;
+	padding-bottom: 0;
+	font-size: 1.1em
+}
+
 #map {
 	margin-left: auto;
   margin-right: auto;
-	margin-top: 10px;
 	width: 67%;
 	height: 500px; 
+}
+
+#pSubmit{
+  text-align: center;
+	margin: 0;
+	margin-top: 5px;
+}
+
+#submitBtn{
+	height: 75px;
+	width: 25%;
+	font-size: 1.9em;
+	background-color: lightblue;
+}
+
+#overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 900;
+}
+
+
+#lieuxProches p{
+	padding: 0;
+	margin:0;
+}
+
+#lieuxProches{
+	font-size: 1.2em;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 1000;
+	transform: translate(-50%,-50%);
+	-webkit-transform: translate(-50%,-50%);
+	
+	background-color: white;
+	padding: 10px;
+	border-radius: 8px;
+	
+	display: flex;
+	flex-direction: column;
 }

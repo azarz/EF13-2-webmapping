@@ -6,6 +6,7 @@ var marker;
 var validationBtn;
 var new_location;
 
+var overlay;
 //TODO: importer les champs DOM
 
 
@@ -27,10 +28,10 @@ function init(){
     initMap();
     validationBtn = document.getElementById("submitBtn");
     validationBtn.addEventListener('click', validateForm);
-    var lieuxProches = document.getElementById("lieuxProches");
+    overlay = document.getElementById("overlay");
 
     // On cache la dv pour les lieux proches
-    lieuxProches.style.visibility = "hidden";
+    overlay.style.visibility = "hidden";
 
     marker = new google.maps.Marker({
         draggable: true,
@@ -93,13 +94,13 @@ function validateForm(event){
            		var confirmBtn = document.createElement("button");
             	confirmBtn.setAttribute("name","confirmBtn");
             	confirmBtn.setAttribute("id","confirmBtn");
-                confirmBtn.setAttribute("value","Confirmer lieu");
+                confirmBtn.innerHTML = "Confirmer lieu";
             	confirmBtn.addEventListener("click", updateDB);
 
                 var neitherBtn = document.createElement("button");
                 neitherBtn.setAttribute("name","neitherBtn");
                 neitherBtn.setAttribute("id","neitherBtn");
-                neitherBtn.setAttribute("value","Aucun de ces lieux");
+                neitherBtn.innerHTML = "Aucun de ces lieux";
                 neitherBtn.addEventListener("click", newLocation);
 
             	for(i=0; i<responseJSON.length;i++){
@@ -117,7 +118,7 @@ function validateForm(event){
                 lieuxProches.appendChild(neitherBtn);
 
                 // On affiche le choix
-                lieuxProches.style.visibility = "visible";
+                overlay.style.visibility = "visible";
             }
         }
     });
@@ -161,7 +162,15 @@ function updateDB(){
 
     xhr.addEventListener('readystatechange', function(){
         if(xhr.readyState == 4 && xhr.status == 200){
-	       alert('Stage ajouté');
+
+            // On cache l'overlay, et on supprime ses enfants
+            overlay.style.visibility = "hidden";
+            var lieuxProches = document.getElementById("lieuxProches");
+                while (lieuxProches.firstChild) {
+                    lieuxProches.removeChild(lieuxProches.firstChild);
+                }
+
+	        alert('Stage ajouté');
        }
     });
 

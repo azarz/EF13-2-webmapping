@@ -12,7 +12,7 @@
 
 
         <body>
-                <div id = 'titre'>
+                <div id='titre'>
                         <p>Complétez tous les champs avec les éléments de votre stage</p>
                 </div>
 
@@ -41,17 +41,18 @@
                 		<p>Résumé en anglais : <input type='text' id='resume_anglais'></p>
                 		<p>Résumé en français : <input type='text' id='resume_français'></p>
                 		<p>Année : <input type='number' id='annee' value='2010'></p>
-                                <p>Lieu du stage : <input type='text' id='lieu'></p>
+                        <p>Lieu du stage : <input type='text' id='lieu'></p>
                     	</fieldset>
 
 
+                    <p id='aide'>Positionnez le marqueur sur votre lieu de stage</p>
                 	<div id="map"></div>
-                        <input type="submit" id="submitBtn" value="valider">
+                    <p id='pSubmit'><input type="submit" id="submitBtn" value="Valider"></p>
                 </form>
 
-
-                <div id='lieuxProches'></div>
-
+                <div id="overlay">
+                    <div id='lieuxProches'></div>
+                </div>
 
         </body>
 
