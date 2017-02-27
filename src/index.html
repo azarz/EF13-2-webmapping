@@ -16,32 +16,31 @@
                         <p>Complétez tous les champs avec les éléments de votre stage</p>
                 </div>
 
-
-                <form>
+                <form id="formStage">
                         <div id="textes">
                             	<fieldset id="infosMaitre">
                                 	<legend>Maître de stage</legend>
-                                	<p>Nom : <input type='text' id='maitre_nom'></p>
-                                	<p>Prénom : <input type='text' id='maitre_prenom'></p>
-                                	<p>Mail : <input type='text' id='maitre_mail'></p>
+                                	<p>Nom : <input required type='text' id='maitre_nom'></p>
+                                	<p>Prénom : <input required type='text' id='maitre_prenom'></p>
+                                	<p>Mail : <input required type='email' id='maitre_mail'></p>
                             	</fieldset>
 
                             	<fieldset id="infosEtudiant">
                         		<legend>Etudiant</legend>
-                        		<p>Nom : <input type='text' id='etudiant_nom'></p>
-                        		<p>Prénom : <input type='text' id='etudiant_prenom'></p>
-                        		<p>Mail : <input type='text' id='etudiant_mail'></p>
+                        		<p>Nom : <input required type='text' id='etudiant_nom'></p>
+                        		<p>Prénom : <input required type='text' id='etudiant_prenom'></p>
+                        		<p>Mail : <input required type='email' id='etudiant_mail'></p>
                             	</fieldset>
                         </div>
 
                     	<fieldset id="infosStage">
                 		<legend>Stage</legend>
-                		<p>Titre en anglais : <input type='text' id='titre_anglais'></p>
-                		<p>Titre en français : <input type='text' id='titre_français'></p>
-                		<p>Résumé en anglais : <input type='text' id='resume_anglais'></p>
-                		<p>Résumé en français : <input type='text' id='resume_français'></p>
-                		<p>Année : <input type='number' id='annee' value='2010'></p>
-                        <p>Lieu du stage : <input type='text' id='lieu'></p>
+                		<p>Titre en anglais : <input required type='text' id='titre_anglais'></p>
+                		<p>Titre en français : <input required type='text' id='titre_français'></p>
+                		<p>Résumé en anglais : <input required type='textArea' id='resume_anglais'></p>
+                		<p>Résumé en français : <input required type='textArea' id='resume_français'></p>
+                		<p>Année : <input required type='number' id='annee' value='2010'></p>
+                        <p>Lieu du stage : <input required type='text' id='lieu'></p>
                     	</fieldset>
 
 

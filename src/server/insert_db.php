@@ -48,10 +48,14 @@
 	}
 
 
-	$title_fr = $newData['internship']['title_fr'];
+	$requestInternship = "INSERT INTO $internship_table (id, id_place, master_name, master_first_name, master_email, student_name, student_first_name, student_email, title_en, title_fr, summary_en, summary_fr, year, lat, lng)
+						  VALUES (DEFAULT, $locationID";
 
-	$requestInternship = "INSERT INTO $internship_table (id, lat, lng, id_place, title_fr)
-						  VALUES (DEFAULT, 0, 0, $locationID, '$title_fr')";
+	foreach($newData['internship'] as $value){
+		$requestInternship .= ",'".$value."'";
+	}
+
+	$requestInternship .= ", 0, 0)";
 
 	$resultInternship = pg_query($link, $requestInternship);
 

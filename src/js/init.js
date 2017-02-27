@@ -3,7 +3,7 @@
 // Le marqueur à déplacer
 var marker;
 // Le bouton de validation
-var validationBtn;
+var form;
 var new_location;
 
 var overlay;
@@ -26,10 +26,10 @@ function init(){
     Initialisation de la fenêtre
     */
     initMap();
-    validationBtn = document.getElementById("submitBtn");
-    validationBtn.addEventListener('click', validateForm);
+    form = document.getElementById("formStage");
+    form.addEventListener('submit', validateForm);
     overlay = document.getElementById("overlay");
-
+    
     // On cache la dv pour les lieux proches
     overlay.style.visibility = "hidden";
 
@@ -83,6 +83,12 @@ function validateForm(event){
 
             	var lieuxProches = document.getElementById("lieuxProches")
 
+                var closeIcon = document.createElement("img");
+                closeIcon.setAttribute('src','./img/close.png');
+                closeIcon.setAttribute("id",'closeIcon'); 
+                closeIcon.setAttribute("class", "close");
+                closeIcon.addEventListener('click', closeOverlay);
+
                 var texte_confirm = document.createElement("p");
                 texte_confirm.innerHTML = "Votre stage a eu lieu dans :"
 
@@ -111,6 +117,7 @@ function validateForm(event){
             		select_location.appendChild(option);
             	}
 
+                lieuxProches.appendChild(closeIcon);
                 lieuxProches.appendChild(texte_confirm);
             	lieuxProches.appendChild(select_location);
             	lieuxProches.appendChild(confirmBtn);
@@ -147,9 +154,14 @@ function updateDB(){
     */
 
     var data = {location: 0,
-                internship:{
-                    title_fr: document.getElementById('titre_français').value
-                }
+                internship:{}
+    }
+
+    var elements = form.elements;
+    for (var i = 0; i < elements.length - 2; i++){
+        if (!(elements[i].tagName == 'FIELDSET')){
+            data.internship['' + elements[i].id] = elements[i].value;
+        }  
     }
 
     if(!new_location){
@@ -162,6 +174,7 @@ function updateDB(){
         }
     }
 
+    console.log(data);
 
     var dataJSON = JSON.stringify(data);
 
@@ -187,4 +200,13 @@ function updateDB(){
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send("data=" + dataJSON);
 
+}
+
+
+function closeOverlay(){
+    overlay.style.visibility = "hidden";
+    var lieuxProches = document.getElementById("lieuxProches");
+        while (lieuxProches.firstChild) {
+            lieuxProches.removeChild(lieuxProches.firstChild);
+        }   
 }

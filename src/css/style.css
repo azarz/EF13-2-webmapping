@@ -129,3 +129,9 @@ fieldset p{
 	display: flex;
 	flex-direction: column;
 }
+
+.close{
+	align-self: flex-end;
+	cursor: pointer;
+	width: 17px;
+}
