@@ -6,13 +6,10 @@ var marker;
 var form;
 var new_location;
 
+//L'élément HTML par dessus le reste pour la validatio du lieu
 var overlay;
-//TODO: importer les champs DOM
 
-
-
-
-
+//L'élément HTML de la selection de lieu de stage lors de la confirmation
 var select_location;
 
 // Fonction au lancement de la fenêtre
@@ -30,7 +27,7 @@ function init(){
     form.addEventListener('submit', validateForm);
     overlay = document.getElementById("overlay");
     
-    // On cache la dv pour les lieux proches
+    // On cache la div pour les lieux proches
     overlay.style.visibility = "hidden";
 
     marker = new google.maps.Marker({
@@ -73,10 +70,12 @@ function validateForm(event){
         if(xhr.readyState == 4 && xhr.status == 200){
             var response = xhr.responseText;
 
+            // Si la réponse est vide, c'est qu'aucun lieu proche n'a été trouvé, le lieu actuel est donc noveau
             if (response == ''){
                 new_location = true;
             	updateDB();
             
+            // Sinon, on peuple les éléments HTML visant à séléctioner un leiu proche le cas échéant
             } else{
                 new_location = false;
             	responseJSON = JSON.parse(response);
@@ -151,6 +150,7 @@ function newLocation(){
 function updateDB(){
     /**
     Envoi des données au  serveur afin de mettre à jour la base de données
+    On les récupère directement du formulaire
     */
 
     var data = {location: 0,
@@ -164,9 +164,11 @@ function updateDB(){
         }  
     }
 
+    // Si le lieu exoste déjà, on le définit par son ID dans la BDD
     if(!new_location){
         data.location = {id: select_location.value}
     } else{
+    // Sinon, on le définit à l'aide du nom et de sa position
         data.location = {
             name: document.getElementById('lieu').value,
             lat: marker.getPosition().lat(),
@@ -184,7 +186,7 @@ function updateDB(){
         if(xhr.readyState == 4 && xhr.status == 200){
             console.log(xhr.responseText);
 
-            // On cache l'overlay, et on supprime ses enfants
+            // On cache l'overlay, et on supprime ses enfants à la confirmation de la requête
             overlay.style.visibility = "hidden";
             var lieuxProches = document.getElementById("lieuxProches");
                 while (lieuxProches.firstChild) {
@@ -195,7 +197,7 @@ function updateDB(){
        }
     });
 
-    // On envoie la requpete au serveur
+    // On envoie la requête au serveur
     xhr.open('POST', 'server/insert_db.php', true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.send("data=" + dataJSON);
@@ -204,6 +206,9 @@ function updateDB(){
 
 
 function closeOverlay(){
+    /**
+    Fonction permettant la fermeture de l'overlay sans confirmer la position
+    */
     overlay.style.visibility = "hidden";
     var lieuxProches = document.getElementById("lieuxProches");
         while (lieuxProches.firstChild) {
